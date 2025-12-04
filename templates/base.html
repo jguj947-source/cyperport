@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="{{ lang }}" dir="{{ 'rtl' if lang == 'ar' else 'ltr' }}">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}بوابة الأمن السيبراني{% endblock %}</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    {% block extra_css %}{% endblock %}
+</head>
+<body>
+    <!-- Header & Navigation -->
+    <header>
+        <div class="navbar">
+            <a href="{{ url_for('index') }}" class="logo">
+                <div class="logo-icon">🛡️</div>
+                <span>{% if lang == 'en' %}Cybersecurity Portal{% else %}بوابة الأمن السيبراني{% endif %}</span>
+            </a>
+            
+            <ul class="nav-menu">
+                <li><a href="{{ url_for('index') }}">{% if lang == 'en' %}Home{% else %}الرئيسية{% endif %}</a></li>
+                <li><a href="{{ url_for('articles') }}">{% if lang == 'en' %}Articles{% else %}المقالات{% endif %}</a></li>
+                <li><a href="{{ url_for('quizzes') }}">{% if lang == 'en' %}Quizzes{% else %}الاختبارات{% endif %}</a></li>
+                <li><a href="{{ url_for('tips') }}">{% if lang == 'en' %}Security Tips{% else %}نصائح أمنية{% endif %}</a></li>
+                <li><a href="{{ url_for('alerts') }}">{% if lang == 'en' %}Fraud Alerts{% else %}تنبيهات الاحتيال{% endif %}</a></li>
+            </ul>
+            
+            <div class="nav-actions">
+                {% if session.get('user_id') %}
+                    {% if session.get('user_role') == 'admin' %}
+                        <a href="{{ url_for('admin_dashboard') }}" class="btn btn-secondary btn-sm">{% if lang == 'en' %}Admin Dashboard{% else %}لوحة التحكم{% endif %}</a>
+                    {% endif %}
+                    <a href="{{ url_for('submit_report') }}" class="btn btn-primary btn-sm">{% if lang == 'en' %}Report Vulnerability{% else %}إبلاغ عن ثغرة{% endif %}</a>
+                    <a href="{{ url_for('logout') }}" class="btn btn-secondary btn-sm">{% if lang == 'en' %}Logout{% else %}تسجيل الخروج{% endif %}</a>
+                {% else %}
+                    <a href="{{ url_for('login') }}" class="btn btn-secondary btn-sm">{% if lang == 'en' %}Login{% else %}تسجيل الدخول{% endif %}</a>
+                    <a href="{{ url_for('register') }}" class="btn btn-primary btn-sm">{% if lang == 'en' %}Sign Up{% else %}إنشاء حساب{% endif %}</a>
+                {% endif %}
+                
+                <div class="language-selector">
+                    <a href="{{ url_for('set_language', language='ar') }}" {% if lang == 'ar' %}style="background-color: var(--primary-light); border-color: var(--primary-color);"{% endif %}>AR</a>
+                    <a href="{{ url_for('set_language', language='en') }}" {% if lang == 'en' %}style="background-color: var(--primary-light); border-color: var(--primary-color);"{% endif %}>EN</a>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Flash Messages -->
+    {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+            <div class="container" style="margin-top: 1rem;">
+                {% for category, message in messages %}
+                    <div class="alert alert-{{ 'success' if category == 'success' else 'danger' if category == 'danger' else 'warning' }}">
+                        {{ message }}
+                    </div>
+                {% endfor %}
+            </div>
+        {% endif %}
+    {% endwith %}
+
+    <!-- Main Content -->
+    <main>
+        {% block content %}{% endblock %}
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <p>© 2025 {% if lang == 'en' %}Cybersecurity Portal. All rights reserved.{% else %}بوابة الأمن السيبراني. جميع الحقوق محفوظة.{% endif %}</p>
+            </div>
+        </div>
+    </footer>
+
+    {% block extra_js %}{% endblock %}
+</body>
+</html>

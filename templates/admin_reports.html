@@ -1,0 +1,45 @@
+{% extends "base.html" %}
+
+{% block title %}إدارة التقارير - بوابة الأمن السيبراني{% endblock %}
+
+{% block content %}
+<section class="section container">
+    <h2>إدارة التقارير</h2>
+    
+    <div style="max-width: 900px; margin: 2rem auto 0;">
+        {% if reports %}
+        <div>
+            {% for report in reports %}
+            <a href="{{ url_for('admin_report_detail', report_id=report['id']) }}" style="text-decoration: none; color: inherit;">
+                <div style="background-color: white; padding: 1.5rem; margin-bottom: 1rem; border-radius: 0.5rem; border-right: 4px solid var(--primary-color); cursor: pointer; transition: all 0.3s;">
+                    <div style="display: flex; justify-content: space-between; align-items: start;">
+                        <div>
+                            <h3 style="margin-bottom: 0.5rem;">{{ report['title'] }}</h3>
+                            <p style="color: var(--text-light); font-size: 0.9rem; margin-bottom: 0.5rem;">
+                                من: {{ report['email'] }} | النوع: {{ report['report_type'] }} | {{ report['created_at'] }}
+                            </p>
+                        </div>
+                        <span style="background-color: 
+                            {% if report['status'] == 'new' %}var(--warning-color)
+                            {% elif report['status'] == 'in_review' %}var(--primary-color)
+                            {% else %}var(--success-color)
+                            {% endif %};
+                            color: white; padding: 0.25rem 0.75rem; border-radius: 0.25rem; font-size: 0.875rem;">
+                            {% if report['status'] == 'new' %}جديد
+                            {% elif report['status'] == 'in_review' %}قيد المراجعة
+                            {% else %}مغلق
+                            {% endif %}
+                        </span>
+                    </div>
+                </div>
+            </a>
+            {% endfor %}
+        </div>
+        {% else %}
+        <div style="text-align: center; padding: 3rem;">
+            <p style="color: var(--text-light);">لا توجد تقارير</p>
+        </div>
+        {% endif %}
+    </div>
+</section>
+{% endblock %}

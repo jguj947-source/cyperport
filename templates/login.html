@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+
+{% block title %}{% if lang == 'en' %}Login{% else %}تسجيل الدخول{% endif %} - {% if lang == 'en' %}Cybersecurity Portal{% else %}بوابة الأمن السيبراني{% endif %}{% endblock %}
+
+{% block content %}
+<section class="section container">
+    <div style="max-width: 400px; margin: 0 auto; background-color: white; padding: 2rem; border-radius: 0.5rem; border: 1px solid var(--border-color);">
+        <h2 style="text-align: center; margin-bottom: 2rem;">{% if lang == 'en' %}Login{% else %}تسجيل الدخول{% endif %}</h2>
+        
+        <form method="POST">
+            <div class="form-group">
+                <label for="email">{% if lang == 'en' %}Email{% else %}البريد الإلكتروني{% endif %}</label>
+                <input type="email" id="email" name="email" required>
+            </div>
+            
+            <div class="form-group">
+                <label for="password">{% if lang == 'en' %}Password{% else %}كلمة المرور{% endif %}</label>
+                <input type="password" id="password" name="password" required>
+            </div>
+            
+            <button type="submit" class="btn btn-primary" style="width: 100%;">{% if lang == 'en' %}Login{% else %}تسجيل الدخول{% endif %}</button>
+        </form>
+        
+        <p style="text-align: center; margin-top: 1.5rem; color: var(--text-light);">
+            {% if lang == 'en' %}Don't have an account?{% else %}ليس لديك حساب؟{% endif %} <a href="{{ url_for('register') }}" style="color: var(--primary-color); text-decoration: none;">{% if lang == 'en' %}Sign Up{% else %}إنشاء حساب{% endif %}</a>
+        </p>
+    </div>
+</section>
+{% endblock %}

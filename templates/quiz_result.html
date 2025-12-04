@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+
+{% block title %}نتائج الاختبار - بوابة الأمن السيبراني{% endblock %}
+
+{% block content %}
+<section class="section container">
+    <div style="max-width: 500px; margin: 0 auto; text-align: center;">
+        <div style="background-color: white; padding: 3rem; border-radius: 0.5rem;">
+            {% if passed %}
+                <div style="font-size: 3rem; margin-bottom: 1rem;">🎉</div>
+                <h2 style="color: var(--success-color); margin-bottom: 1rem;">تهانينا!</h2>
+                <p style="color: var(--text-light); margin-bottom: 1.5rem;">لقد نجحت في الاختبار</p>
+            {% else %}
+                <div style="font-size: 3rem; margin-bottom: 1rem;">📚</div>
+                <h2 style="color: var(--warning-color); margin-bottom: 1rem;">محاولة أخرى</h2>
+                <p style="color: var(--text-light); margin-bottom: 1.5rem;">لم تصل إلى درجة النجاح المطلوبة</p>
+            {% endif %}
+            
+            <div style="background-color: var(--primary-light); padding: 2rem; border-radius: 0.5rem; margin-bottom: 2rem;">
+                <div style="font-size: 2.5rem; font-weight: bold; color: var(--primary-color); margin-bottom: 0.5rem;">{{ score }}%</div>
+                <p style="color: var(--text-light);">درجتك في الاختبار</p>
+            </div>
+            
+            <p style="color: var(--text-light); margin-bottom: 1.5rem;">
+                درجة النجاح المطلوبة: {{ quiz['pass_score'] }}%
+            </p>
+            
+            <div style="display: flex; gap: 1rem; justify-content: center;">
+                <a href="{{ url_for('take_quiz', quiz_id=quiz['id']) }}" class="btn btn-primary">إعادة الاختبار</a>
+                <a href="{{ url_for('quizzes') }}" class="btn btn-secondary">العودة للاختبارات</a>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}

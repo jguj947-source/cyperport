@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+
+{% block title %}إبلاغ عن ثغرة - بوابة الأمن السيبراني{% endblock %}
+
+{% block content %}
+<section class="section container">
+    <div style="max-width: 600px; margin: 0 auto;">
+        <h2 style="text-align: center; margin-bottom: 2rem;">إبلاغ عن ثغرة أمنية</h2>
+        
+        <form method="POST" enctype="multipart/form-data" style="background-color: white; padding: 2rem; border-radius: 0.5rem;">
+            <div class="form-group">
+                <label for="report_type">نوع التقرير</label>
+                <select id="report_type" name="report_type" required>
+                    <option value="">اختر نوع التقرير</option>
+                    {% for code, label in report_types %}
+                    <option value="{{ code }}">{{ label }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            
+            <div class="form-group">
+                <label for="title">العنوان</label>
+                <input type="text" id="title" name="title" required minlength="5" maxlength="200">
+            </div>
+            
+            <div class="form-group">
+                <label for="description">الوصف التفصيلي</label>
+                <textarea id="description" name="description" required></textarea>
+            </div>
+            
+            <div class="form-group">
+                <label for="file_upload">ملف/صورة اختيارية (jpg, png, pdf - حد أقصى 5MB)</label>
+                <input type="file" id="file_upload" name="file_upload" accept=".jpg,.jpeg,.png,.pdf">
+            </div>
+            
+            <button type="submit" class="btn btn-primary" style="width: 100%;">إرسال التقرير</button>
+        </form>
+    </div>
+</section>
+{% endblock %}

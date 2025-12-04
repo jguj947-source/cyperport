@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+
+{% block title %}{% if lang == 'en' %}Quizzes{% else %}الاختبارات{% endif %} - {% if lang == 'en' %}Cybersecurity Portal{% else %}بوابة الأمن السيبراني{% endif %}{% endblock %}
+
+{% block content %}
+<section class="section container">
+    <h2>{% if lang == 'en' %}Quizzes{% else %}الاختبارات{% endif %}</h2>
+    <p class="section-subtitle">{% if lang == 'en' %}Test your cybersecurity knowledge through interactive quizzes{% else %}اختبر معلوماتك في الأمن السيبراني من خلال اختبارات تفاعلية{% endif %}</p>
+    
+    <div class="cards-grid">
+        {% for quiz in quizzes %}
+        <div class="card">
+            <div class="card-icon">🧠</div>
+            <h3>
+                {% if lang == 'en' %}
+                    {{ quiz['title_en'] }}
+                {% else %}
+                    {{ quiz['title_ar'] }}
+                {% endif %}
+            </h3>
+            <p>{% if lang == 'en' %}Pass Score{% else %}درجة النجاح{% endif %}: {{ quiz['pass_score'] }}%</p>
+            
+            {% if session.get('user_id') and quiz['id'] in user_scores %}
+            <p style="color: var(--success-color); font-weight: bold;">
+                {% if lang == 'en' %}Best Score{% else %}أفضل درجة{% endif %}: {{ user_scores[quiz['id']] }}%
+            </p>
+            {% endif %}
+            
+            {% if session.get('user_id') %}
+                <a href="{{ url_for('take_quiz', quiz_id=quiz['id']) }}" class="btn btn-primary" style="width: 100%; text-align: center;">{% if lang == 'en' %}Start Quiz{% else %}ابدأ الاختبار{% endif %}</a>
+            {% else %}
+                <a href="{{ url_for('login') }}" class="btn btn-primary" style="width: 100%; text-align: center;">{% if lang == 'en' %}Start Quiz{% else %}ابدأ الاختبار{% endif %}</a>
+            {% endif %}
+        </div>
+        {% endfor %}
+    </div>
+</section>
+{% endblock %}

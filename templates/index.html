@@ -1,0 +1,101 @@
+{% extends "base.html" %}
+
+{% block title %}{% if lang == 'en' %}Home Page{% else %}الصفحة الرئيسية{% endif %} - {% if lang == 'en' %}Cybersecurity Portal{% else %}بوابة الأمن السيبراني{% endif %}{% endblock %}
+
+{% block content %}
+<!-- Hero Section -->
+<section class="hero">
+    <div class="hero-content">
+        <div class="hero-icon">🛡️</div>
+        <h1>{% if lang == 'en' %}Cybersecurity Portal{% else %}بوابة الأمن السيبراني{% endif %}</h1>
+        <p>{% if lang == 'en' %}An integrated platform for reporting security vulnerabilities and raising cybersecurity awareness{% else %}منصة متكاملة للإبلاغ عن الثغرات الأمنية ورفع الوعي بالأمن السيبراني{% endif %}</p>
+        <div class="hero-buttons">
+            {% if session.get('user_id') %}
+                <a href="{{ url_for('submit_report') }}" class="btn btn-primary">{% if lang == 'en' %}Report Vulnerability{% else %}إبلاغ عن ثغرة{% endif %}</a>
+            {% else %}
+                <a href="{{ url_for('register') }}" class="btn btn-primary">{% if lang == 'en' %}Sign Up{% else %}إنشاء حساب{% endif %}</a>
+            {% endif %}
+            <a href="{{ url_for('articles') }}" class="btn btn-secondary">{% if lang == 'en' %}Browse Articles{% else %}تصفح المقالات{% endif %}</a>
+        </div>
+    </div>
+</section>
+
+<!-- What We Offer Section -->
+<section class="section container">
+    <h2>{% if lang == 'en' %}What We Offer?{% else %}ماذا نقدم؟{% endif %}</h2>
+    <p class="section-subtitle">{% if lang == 'en' %}A comprehensive platform combining vulnerability reporting and cybersecurity awareness{% else %}منصة شاملة تجمع بين الإبلاغ عن الثغرات والتوعية بالأمن السيبراني{% endif %}</p>
+    
+    <div class="cards-grid">
+        <!-- Report Card -->
+        <a href="{% if session.get('user_id') %}{{ url_for('submit_report') }}{% else %}{{ url_for('login') }}{% endif %}" class="card">
+            <div class="card-icon">📋</div>
+            <h3>{% if lang == 'en' %}Report Vulnerability{% else %}إبلاغ عن ثغرة{% endif %}</h3>
+            <p>{% if lang == 'en' %}Report any security vulnerability you discover to protect the digital infrastructure{% else %}قم بالإبلاغ عن أي ثغرة أمنية تكتشفها لحماية البنية التحتية الرقمية{% endif %}</p>
+        </a>
+        
+        <!-- Articles Card -->
+        <a href="{{ url_for('articles') }}" class="card">
+            <div class="card-icon">📚</div>
+            <h3>{% if lang == 'en' %}Articles{% else %}المقالات{% endif %}</h3>
+            <p>{% if lang == 'en' %}Read comprehensive awareness articles about the latest security threats and how to prevent them{% else %}اقرأ مقالات توعوية شاملة حول أحدث التهديدات الأمنية وكيفية الوقاية منها{% endif %}</p>
+        </a>
+        
+        <!-- Quizzes Card -->
+        <a href="{{ url_for('quizzes') }}" class="card">
+            <div class="card-icon">🧠</div>
+            <h3>{% if lang == 'en' %}Quizzes{% else %}الاختبارات{% endif %}</h3>
+            <p>{% if lang == 'en' %}Test your security knowledge through interactive quizzes and assess your cybersecurity awareness level{% else %}اختبر معلوماتك الأمنية من خلال اختبارات تفاعلية وقيّم مستوى وعيك السيبراني{% endif %}</p>
+        </a>
+        
+        <!-- Tips Card -->
+        <a href="{{ url_for('tips') }}" class="card">
+            <div class="card-icon">💡</div>
+            <h3>{% if lang == 'en' %}Security Tips{% else %}نصائح أمنية{% endif %}</h3>
+            <p>{% if lang == 'en' %}Get daily practical tips to enhance your personal and professional digital security{% else %}احصل على نصائح عملية يومية لتعزيز أمانك الرقمي الشخصي والمهني{% endif %}</p>
+        </a>
+        
+        <!-- Alerts Card -->
+        <a href="{{ url_for('alerts') }}" class="card">
+            <div class="card-icon">⚠️</div>
+            <h3>{% if lang == 'en' %}Fraud Alerts{% else %}تنبيهات الاحتيال{% endif %}</h3>
+            <p>{% if lang == 'en' %}Stay informed about the latest alerts regarding fraud attempts and electronic threats{% else %}ابقَ على اطلاع بأحدث التنبيهات حول محاولات الاحتيال والتهديدات الإلكترونية{% endif %}</p>
+        </a>
+    </div>
+</section>
+
+<!-- Stats Section -->
+<section class="section container" style="background-color: white; margin: 0; padding: 3rem 1rem;">
+    <div class="container">
+        <div class="stats-grid">
+            <div class="stat-item">
+                <div class="stat-number">24/7</div>
+                <div class="stat-label">{% if lang == 'en' %}Continuous Monitoring{% else %}مراقبة مستمرة{% endif %}</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-number">100%</div>
+                <div class="stat-label">{% if lang == 'en' %}Data Protection{% else %}حماية البيانات{% endif %}</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-number">∞</div>
+                <div class="stat-label">{% if lang == 'en' %}Security Commitment{% else %}التزام بالأمان{% endif %}</div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- CTA Section -->
+<section class="section container">
+    <div style="text-align: center; padding: 3rem;">
+        <h2>{% if lang == 'en' %}Start Your Cybersecurity Journey Today{% else %}ابدأ رحلتك في الأمن السيبراني اليوم{% endif %}</h2>
+        <p class="section-subtitle">{% if lang == 'en' %}Join us in building a safer digital environment for everyone{% else %}انضم إلينا في بناء بيئة رقمية أكثر أماناً للجميع{% endif %}</p>
+        <div class="hero-buttons">
+            {% if session.get('user_id') %}
+                <a href="{{ url_for('quizzes') }}" class="btn btn-primary">{% if lang == 'en' %}Take Quizzes{% else %}خوض الاختبارات{% endif %}</a>
+            {% else %}
+                <a href="{{ url_for('register') }}" class="btn btn-primary">{% if lang == 'en' %}Sign Up{% else %}إنشاء حساب{% endif %}</a>
+                <a href="{{ url_for('quizzes') }}" class="btn btn-secondary">{% if lang == 'en' %}Take Quizzes{% else %}خوض الاختبارات{% endif %}</a>
+            {% endif %}
+        </div>
+    </div>
+</section>
+{% endblock %}

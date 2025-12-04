@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+
+{% block title %}إدارة المقالات - بوابة الأمن السيبراني{% endblock %}
+
+{% block content %}
+<section class="section container">
+    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem;">
+        <h2>إدارة المقالات</h2>
+        <a href="{{ url_for('admin_new_article') }}" class="btn btn-primary">مقالة جديدة</a>
+    </div>
+    
+    <div style="max-width: 900px; margin: 0 auto;">
+        {% if articles %}
+        <div>
+            {% for article in articles %}
+            <div style="background-color: white; padding: 1.5rem; margin-bottom: 1rem; border-radius: 0.5rem; display: flex; justify-content: space-between; align-items: start;">
+                <div style="flex: 1;">
+                    <h3 style="margin-bottom: 0.5rem;">{{ article['title_ar'] }}</h3>
+                    <p style="color: var(--text-light); font-size: 0.9rem; margin-bottom: 0.5rem;">
+                        {{ article['views'] }} مشاهدة | {{ article['created_at'] }}
+                    </p>
+                </div>
+                <div style="display: flex; gap: 0.5rem;">
+                    <a href="{{ url_for('admin_edit_article', article_id=article['id']) }}" class="btn btn-secondary btn-sm">تعديل</a>
+                    <form method="POST" action="{{ url_for('admin_delete_article', article_id=article['id']) }}" style="display: inline;">
+                        <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('هل أنت متأكد؟');">حذف</button>
+                    </form>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+        {% else %}
+        <div style="text-align: center; padding: 3rem;">
+            <p style="color: var(--text-light); margin-bottom: 1.5rem;">لا توجد مقالات</p>
+            <a href="{{ url_for('admin_new_article') }}" class="btn btn-primary">إنشاء مقالة جديدة</a>
+        </div>
+        {% endif %}
+    </div>
+</section>
+{% endblock %}

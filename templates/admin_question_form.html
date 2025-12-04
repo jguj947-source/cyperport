@@ -1,0 +1,61 @@
+{% extends "base.html" %}
+
+{% block title %}{% if question %}{% if lang == 'en' %}Edit Question{% else %}تعديل السؤال{% endif %}{% else %}{% if lang == 'en' %}New Question{% else %}سؤال جديد{% endif %}{% endif %} - {% if lang == 'en' %}Cybersecurity Portal{% else %}بوابة الأمن السيبراني{% endif %}{% endblock %}
+
+{% block content %}
+<section class="section container">
+    <div style="max-width: 800px; margin: 0 auto;">
+        <h2 style="margin-bottom: 2rem;">{% if question %}{% if lang == 'en' %}Edit Question{% else %}تعديل السؤال{% endif %}{% else %}{% if lang == 'en' %}New Question{% else %}سؤال جديد{% endif %}{% endif %}</h2>
+        <p style="color: var(--text-light); margin-bottom: 1.5rem;">{% if lang == 'en' %}Quiz: {{ quiz['title_en'] }}{% else %}الاختبار: {{ quiz['title_ar'] }}{% endif %}</p>
+        
+        <form method="POST" style="background-color: white; padding: 2rem; border-radius: 0.5rem;">
+            {{ form.hidden_tag() }}
+            
+            <div class="form-group">
+                <label for="{{ form.question_ar.id }}">{% if lang == 'en' %}Question (Arabic){% else %}السؤال (العربية){% endif %}</label>
+                {{ form.question_ar(class="form-control") }}
+                {% for error in form.question_ar.errors %}
+                    <span class="error-message">{{ error }}</span>
+                {% endfor %}
+            </div>
+            
+            <div class="form-group">
+                <label for="{{ form.question_en.id }}">{% if lang == 'en' %}Question (English){% else %}السؤال (الإنجليزية){% endif %}</label>
+                {{ form.question_en(class="form-control") }}
+                {% for error in form.question_en.errors %}
+                    <span class="error-message">{{ error }}</span>
+                {% endfor %}
+            </div>
+            
+            <h3 style="margin-top: 2rem; margin-bottom: 1rem;">{% if lang == 'en' %}Options{% else %}الخيارات{% endif %}</h3>
+            
+            {% for i in range(1, 6) %}
+            <div class="form-group" style="border: 1px solid var(--border-color); padding: 1rem; margin-bottom: 1rem; border-radius: 0.25rem;">
+                <label style="font-weight: bold;">{% if lang == 'en' %}Option {{ i }}{% else %}الخيار {{ i }}{% endif %}</label>
+                <div class="form-group">
+                    <label for="{{ form['option' + i|string + '_ar'].id }}">{% if lang == 'en' %}Arabic{% else %}العربية{% endif %}</label>
+                    {{ form['option' + i|string + '_ar'](class="form-control") }}
+                </div>
+                <div class="form-group">
+                    <label for="{{ form['option' + i|string + '_en'].id }}">{% if lang == 'en' %}English{% else %}الإنجليزية{% endif %}</label>
+                    {{ form['option' + i|string + '_en'](class="form-control") }}
+                </div>
+            </div>
+            {% endfor %}
+            
+            <div class="form-group">
+                <label for="{{ form.correct_option.id }}">{% if lang == 'en' %}Correct Option{% else %}الخيار الصحيح{% endif %}</label>
+                {{ form.correct_option(class="form-control") }}
+                {% for error in form.correct_option.errors %}
+                    <span class="error-message">{{ error }}</span>
+                {% endfor %}
+            </div>
+            
+            <div style="display: flex; gap: 1rem;">
+                <button type="submit" class="btn btn-primary">{% if lang == 'en' %}Save{% else %}حفظ{% endif %}</button>
+                <a href="{{ url_for('admin_quiz_questions', quiz_id=quiz['id']) }}" class="btn btn-secondary">{% if lang == 'en' %}Cancel{% else %}إلغاء{% endif %}</a>
+            </div>
+        </form>
+    </div>
+</section>
+{% endblock %}

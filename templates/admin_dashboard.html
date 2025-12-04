@@ -1,0 +1,58 @@
+{% extends "base.html" %}
+
+{% block title %}{% if lang == 'en' %}Admin Dashboard{% else %}لوحة التحكم{% endif %} - {% if lang == 'en' %}Cybersecurity Portal{% else %}بوابة الأمن السيبراني{% endif %}{% endblock %}
+
+{% block content %}
+<section class="section container">
+    <h2>{% if lang == 'en' %}Admin Dashboard{% else %}لوحة التحكم الإدارية{% endif %}</h2>
+    
+    <div class="stats-grid" style="margin-top: 2rem;">
+        <div class="stat-item">
+            <div class="stat-number">{{ total_reports }}</div>
+            <div class="stat-label">{% if lang == 'en' %}Total Reports{% else %}إجمالي التقارير{% endif %}</div>
+        </div>
+        <div class="stat-item">
+            <div class="stat-number">{{ new_reports }}</div>
+            <div class="stat-label">{% if lang == 'en' %}New Reports{% else %}تقارير جديدة{% endif %}</div>
+        </div>
+        <div class="stat-item">
+            <div class="stat-number">{{ total_users }}</div>
+            <div class="stat-label">{% if lang == 'en' %}Users{% else %}المستخدمون{% endif %}</div>
+        </div>
+        <div class="stat-item">
+            <div class="stat-number">{{ total_articles }}</div>
+            <div class="stat-label">{% if lang == 'en' %}Articles{% else %}المقالات{% endif %}</div>
+        </div>
+        <div class="stat-item">
+            <div class="stat-number">{{ total_quizzes }}</div>
+            <div class="stat-label">{% if lang == 'en' %}Quizzes{% else %}الاختبارات{% endif %}</div>
+        </div>
+    </div>
+    
+    <div style="max-width: 900px; margin: 3rem auto 0; display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 1.5rem;">
+        <a href="{{ url_for('admin_reports') }}" class="card">
+            <div class="card-icon">📋</div>
+            <h3>{% if lang == 'en' %}Manage Reports{% else %}إدارة التقارير{% endif %}</h3>
+            <p>{% if lang == 'en' %}View and manage user-submitted reports{% else %}عرض وإدارة التقارير المرسلة من المستخدمين{% endif %}</p>
+        </a>
+        
+        <a href="{{ url_for('admin_articles') }}" class="card">
+            <div class="card-icon">📚</div>
+            <h3>{% if lang == 'en' %}Manage Articles{% else %}إدارة المقالات{% endif %}</h3>
+            <p>{% if lang == 'en' %}Create, edit, and delete awareness articles{% else %}إنشاء وتعديل وحذف المقالات التوعوية{% endif %}</p>
+        </a>
+        
+        <a href="{{ url_for('admin_quizzes') }}" class="card">
+            <div class="card-icon">📝</div>
+            <h3>{% if lang == 'en' %}Manage Quizzes{% else %}إدارة الاختبارات{% endif %}</h3>
+            <p>{% if lang == 'en' %}Create, edit, and delete quizzes and questions{% else %}إنشاء وتعديل وحذف الاختبارات والأسئلة{% endif %}</p>
+        </a>
+        
+        <a href="{{ url_for('admin_tips_alerts') }}" class="card">
+            <div class="card-icon">📢</div>
+            <h3>{% if lang == 'en' %}Manage Tips & Alerts{% else %}إدارة النصائح والتنبيهات{% endif %}</h3>
+            <p>{% if lang == 'en' %}Create, edit, and delete security tips and fraud alerts{% else %}إنشاء وتعديل وحذف النصائح والتنبيهات الأمنية{% endif %}</p>
+        </a>
+    </div>
+</section>
+{% endblock %}

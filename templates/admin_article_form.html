@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+
+{% block title %}{% if article %}تعديل المقالة{% else %}مقالة جديدة{% endif %} - بوابة الأمن السيبراني{% endblock %}
+
+{% block content %}
+<section class="section container">
+    <div style="max-width: 800px; margin: 0 auto;">
+        <h2 style="margin-bottom: 2rem;">{% if article %}تعديل المقالة{% else %}مقالة جديدة{% endif %}</h2>
+        
+        <form method="POST" style="background-color: white; padding: 2rem; border-radius: 0.5rem;">
+            <div class="form-group">
+                <label for="title_ar">العنوان (العربية)</label>
+                <input type="text" id="title_ar" name="title_ar" required value="{{ article['title_ar'] if article else '' }}">
+            </div>
+            
+            <div class="form-group">
+                <label for="title_en">العنوان (الإنجليزية)</label>
+                <input type="text" id="title_en" name="title_en" required value="{{ article['title_en'] if article else '' }}">
+            </div>
+            
+            <div class="form-group">
+                <label for="content_ar">المحتوى (العربية)</label>
+                <textarea id="content_ar" name="content_ar" required>{{ article['content_ar'] if article else '' }}</textarea>
+            </div>
+            
+            <div class="form-group">
+                <label for="content_en">المحتوى (الإنجليزية)</label>
+                <textarea id="content_en" name="content_en" required>{{ article['content_en'] if article else '' }}</textarea>
+            </div>
+            
+            <div style="display: flex; gap: 1rem;">
+                <button type="submit" class="btn btn-primary">حفظ</button>
+                <a href="{{ url_for('admin_articles') }}" class="btn btn-secondary">إلغاء</a>
+            </div>
+        </form>
+    </div>
+</section>
+{% endblock %}

@@ -1,0 +1,44 @@
+{% extends "base.html" %}
+
+{% block title %}{% if quiz %}{% if lang == 'en' %}Edit Quiz{% else %}تعديل الاختبار{% endif %}{% else %}{% if lang == 'en' %}New Quiz{% else %}اختبار جديد{% endif %}{% endif %} - {% if lang == 'en' %}Cybersecurity Portal{% else %}بوابة الأمن السيبراني{% endif %}{% endblock %}
+
+{% block content %}
+<section class="section container">
+    <div style="max-width: 600px; margin: 0 auto;">
+        <h2 style="margin-bottom: 2rem;">{% if quiz %}{% if lang == 'en' %}Edit Quiz{% else %}تعديل الاختبار{% endif %}{% else %}{% if lang == 'en' %}New Quiz{% else %}اختبار جديد{% endif %}{% endif %}</h2>
+        
+        <form method="POST" style="background-color: white; padding: 2rem; border-radius: 0.5rem;">
+            {{ form.hidden_tag() }}
+            
+            <div class="form-group">
+                <label for="{{ form.title_ar.id }}">{% if lang == 'en' %}Quiz Title (Arabic){% else %}عنوان الاختبار (العربية){% endif %}</label>
+                {{ form.title_ar(class="form-control") }}
+                {% for error in form.title_ar.errors %}
+                    <span class="error-message">{{ error }}</span>
+                {% endfor %}
+            </div>
+            
+            <div class="form-group">
+                <label for="{{ form.title_en.id }}">{% if lang == 'en' %}Quiz Title (English){% else %}عنوان الاختبار (الإنجليزية){% endif %}</label>
+                {{ form.title_en(class="form-control") }}
+                {% for error in form.title_en.errors %}
+                    <span class="error-message">{{ error }}</span>
+                {% endfor %}
+            </div>
+            
+            <div class="form-group">
+                <label for="{{ form.pass_score.id }}">{% if lang == 'en' %}Pass Score (%) (0-100){% else %}درجة النجاح (%) (0-100){% endif %}</label>
+                {{ form.pass_score(class="form-control", type="number") }}
+                {% for error in form.pass_score.errors %}
+                    <span class="error-message">{{ error }}</span>
+                {% endfor %}
+            </div>
+            
+            <div style="display: flex; gap: 1rem;">
+                <button type="submit" class="btn btn-primary">{% if lang == 'en' %}Save{% else %}حفظ{% endif %}</button>
+                <a href="{{ url_for('admin_quizzes') }}" class="btn btn-secondary">{% if lang == 'en' %}Cancel{% else %}إلغاء{% endif %}</a>
+            </div>
+        </form>
+    </div>
+</section>
+{% endblock %}

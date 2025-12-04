@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+
+{% block title %}{% if lang == 'en' %}Articles{% else %}المقالات{% endif %} - {% if lang == 'en' %}Cybersecurity Portal{% else %}بوابة الأمن السيبراني{% endif %}{% endblock %}
+
+{% block content %}
+<section class="section container">
+    <h2>{% if lang == 'en' %}Articles{% else %}المقالات{% endif %}</h2>
+    <p class="section-subtitle">{% if lang == 'en' %}Read the latest awareness articles about cybersecurity{% else %}اقرأ أحدث المقالات التوعوية حول الأمن السيبراني{% endif %}</p>
+    
+    <div class="cards-grid">
+        {% for article in articles %}
+        <a href="{{ url_for('article_detail', article_id=article['id']) }}" class="card">
+            <div class="card-badge">📚</div>
+            <h3>
+                {% if lang == 'en' %}
+                    {{ article['title_en'] }}
+                {% else %}
+                    {{ article['title_ar'] }}
+                {% endif %}
+            </h3>
+            <p>
+                {% if lang == 'en' %}
+                    {{ article['content_en'][:150] }}...
+                {% else %}
+                    {{ article['content_ar'][:150] }}...
+                {% endif %}
+            </p>
+            <div class="card-footer">
+                <span>{{ article['views'] }} {% if lang == 'en' %}views{% else %}مشاهدة{% endif %}</span>
+            </div>
+        </a>
+        {% endfor %}
+    </div>
+</section>
+{% endblock %}

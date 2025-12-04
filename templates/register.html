@@ -1,0 +1,56 @@
+{% extends "base.html" %}
+
+{% block title %}{% if lang == 'en' %}Sign Up{% else %}إنشاء حساب{% endif %} - {% if lang == 'en' %}Cybersecurity Portal{% else %}بوابة الأمن السيبراني{% endif %}{% endblock %}
+
+{% block content %}
+<section class="section container">
+    <div style="max-width: 500px; margin: 0 auto; background-color: white; padding: 2rem; border-radius: 0.5rem; border: 1px solid var(--border-color);">
+        <h2 style="text-align: center; margin-bottom: 2rem;">{% if lang == 'en' %}Create New Account{% else %}إنشاء حساب جديد{% endif %}</h2>
+        
+        <form method="POST">
+            <div class="form-group">
+                <label for="full_name">{% if lang == 'en' %}Full Name{% else %}الاسم الكامل{% endif %}</label>
+                <input type="text" id="full_name" name="full_name" required>
+            </div>
+            
+            <div class="form-group">
+                <label for="email">{% if lang == 'en' %}Email{% else %}البريد الإلكتروني{% endif %}</label>
+                <input type="email" id="email" name="email" required>
+            </div>
+            
+            <div class="form-group">
+                <label for="password">{% if lang == 'en' %}Password{% else %}كلمة المرور{% endif %}</label>
+                <input type="password" id="password" name="password" required minlength="8">
+                <small style="color: var(--text-light);">{% if lang == 'en' %}Must be at least 8 characters{% else %}يجب أن تكون 8 أحرف على الأقل{% endif %}</small>
+            </div>
+            
+            <div class="form-group">
+                <label for="password2">{% if lang == 'en' %}Confirm Password{% else %}تأكيد كلمة المرور{% endif %}</label>
+                <input type="password" id="password2" name="password2" required>
+            </div>
+            
+            <div class="form-group">
+                <label for="department">{% if lang == 'en' %}Department{% else %}القسم{% endif %}</label>
+                <select id="department" name="department" required>
+                    <option value="">{% if lang == 'en' %}Select Department{% else %}اختر القسم{% endif %}</option>
+                    <option value="IT">تقنية المعلومات</option>
+                    <option value="HR">الموارد البشرية</option>
+                    <option value="Finance">المالية</option>
+                    <option value="Other">أخرى</option>
+                </select>
+            </div>
+            
+            <div class="form-group">
+                <label for="job_role">{% if lang == 'en' %}Job Role{% else %}الوظيفة/الدور{% endif %}</label>
+                <input type="text" id="job_role" name="job_role" required>
+            </div>
+            
+            <button type="submit" class="btn btn-primary" style="width: 100%;">{% if lang == 'en' %}Sign Up{% else %}إنشاء حساب{% endif %}</button>
+        </form>
+        
+        <p style="text-align: center; margin-top: 1.5rem; color: var(--text-light);">
+            {% if lang == 'en' %}Already have an account?{% else %}هل لديك حساب بالفعل؟{% endif %} <a href="{{ url_for('login') }}" style="color: var(--primary-color); text-decoration: none;">{% if lang == 'en' %}Login{% else %}تسجيل الدخول{% endif %}</a>
+        </p>
+    </div>
+</section>
+{% endblock %}

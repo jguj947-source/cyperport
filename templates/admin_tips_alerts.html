@@ -1,0 +1,46 @@
+{% extends "base.html" %}
+
+{% block title %}{% if lang == 'en' %}Manage Tips & Alerts{% else %}إدارة النصائح والتنبيهات{% endif %} - {% if lang == 'en' %}Cybersecurity Portal{% else %}بوابة الأمن السيبراني{% endif %}{% endblock %}
+
+{% block content %}
+<section class="section container">
+    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem;">
+        <h2>{% if lang == 'en' %}Manage Tips & Alerts{% else %}إدارة النصائح والتنبيهات{% endif %}</h2>
+        <a href="{{ url_for('admin_new_tip_alert') }}" class="btn btn-primary">{% if lang == 'en' %}New Tip/Alert{% else %}نصيحة/تنبيه جديد{% endif %}</a>
+    </div>
+    
+    <div style="max-width: 900px; margin: 0 auto;">
+        {% if tips_alerts %}
+        <div>
+            {% for item in tips_alerts %}
+            <div style="background-color: white; padding: 1.5rem; margin-bottom: 1rem; border-radius: 0.5rem; border-left: 4px solid {% if item['type'] == 'tip' %}var(--primary-color){% else %}var(--danger-color){% endif %}; display: flex; justify-content: space-between; align-items: center;">
+                <div style="flex: 1;">
+                    <h3 style="margin-bottom: 0.5rem;">
+                        {% if item['type'] == 'tip' %}
+                            {% if lang == 'en' %}Security Tip{% else %}نصيحة أمنية{% endif %}
+                        {% else %}
+                            {% if lang == 'en' %}Fraud Alert{% else %}تنبيه احتيال{% endif %}
+                        {% endif %}
+                    </h3>
+                    <p style="color: var(--text-light); font-size: 0.9rem; margin-bottom: 0.5rem;">
+                        {% if lang == 'en' %}{{ item['content_en'] | truncate(100) }}{% else %}{{ item['content_ar'] | truncate(100) }}{% endif %}
+                    </p>
+                </div>
+                <div style="display: flex; gap: 0.5rem;">
+                    <a href="{{ url_for('admin_edit_tip_alert', item_id=item['id']) }}" class="btn btn-secondary btn-sm">{% if lang == 'en' %}Edit{% else %}تعديل{% endif %}</a>
+                    <form method="POST" action="{{ url_for('admin_delete_tip_alert', item_id=item['id']) }}" style="display: inline;">
+                        <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('{% if lang == 'en' %}Are you sure you want to delete this item?{% else %}هل أنت متأكد من حذف هذا العنصر؟{% endif %}');">{% if lang == 'en' %}Delete{% else %}حذف{% endif %}</button>
+                    </form>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+        {% else %}
+        <div style="text-align: center; padding: 3rem;">
+            <p style="color: var(--text-light); margin-bottom: 1.5rem;">{% if lang == 'en' %}No tips or alerts found.{% else %}لا توجد نصائح أو تنبيهات.{% endif %}</p>
+            <a href="{{ url_for('admin_new_tip_alert') }}" class="btn btn-primary">{% if lang == 'en' %}Create New Tip/Alert{% else %}إنشاء نصيحة/تنبيه جديد{% endif %}</a>
+        </div>
+        {% endif %}
+    </div>
+</section>
+{% endblock %}

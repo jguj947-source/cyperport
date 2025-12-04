@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+
+{% block title %}{% if lang == 'en' %}Fraud Alerts{% else %}تنبيهات الاحتيال{% endif %} - {% if lang == 'en' %}Cybersecurity Portal{% else %}بوابة الأمن السيبراني{% endif %}{% endblock %}
+
+{% block content %}
+<section class="section container">
+    <h2>{% if lang == 'en' %}Fraud Alerts{% else %}تنبيهات الاحتيال{% endif %}</h2>
+    <p class="section-subtitle">{% if lang == 'en' %}Stay informed about the latest alerts regarding fraud attempts and electronic threats{% else %}ابقَ على اطلاع بأحدث التنبيهات حول محاولات الاحتيال والتهديدات الإلكترونية{% endif %}</p>
+    
+    <div style="max-width: 900px; margin: 0 auto;">
+        {% for alert in alerts %}
+        <div style="background-color: white; padding: 1.5rem; margin-bottom: 1.5rem; border-radius: 0.5rem; border-right: 4px solid var(--danger-color);">
+            <h3 style="margin-bottom: 0.5rem;">⚠️ {% if lang == 'en' %}Alert{% else %}تنبيه{% endif %}</h3>
+            <p>
+                {% if lang == 'en' %}
+                    {{ alert['content_en'] }}
+                {% else %}
+                    {{ alert['content_ar'] }}
+                {% endif %}
+            </p>
+        </div>
+        {% endfor %}
+    </div>
+</section>
+{% endblock %}

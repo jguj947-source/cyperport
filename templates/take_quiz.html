@@ -1,0 +1,49 @@
+{% extends "base.html" %}
+
+{% block title %}{{ quiz['title_ar'] if lang == 'ar' else quiz['title_en'] }} - {% if lang == 'en' %}Cybersecurity Portal{% else %}بوابة الأمن السيبراني{% endif %}{% endblock %}
+
+{% block content %}
+<section class="section container">
+    <div style="max-width: 700px; margin: 0 auto;">
+        <a href="{{ url_for('quizzes') }}" style="color: var(--primary-color); text-decoration: none;">{% if lang == 'en' %}→ Back to Quizzes{% else %}← العودة للاختبارات{% endif %}</a>
+        
+        <h1 style="margin-top: 1.5rem; margin-bottom: 0.5rem;">
+            {% if lang == 'en' %}
+                {{ quiz['title_en'] }}
+            {% else %}
+                {{ quiz['title_ar'] }}
+            {% endif %}
+        </h1>
+        <p style="color: var(--text-light); margin-bottom: 2rem;">{% if lang == 'en' %}Pass Score{% else %}درجة النجاح{% endif %}: {{ quiz['pass_score'] }}%</p>
+        
+        <form method="POST" action="{{ url_for('submit_quiz', quiz_id=quiz['id']) }}" style="background-color: white; padding: 2rem; border-radius: 0.5rem;">
+            {% for item in quiz_data %}
+            <div style="margin-bottom: 2rem; padding-bottom: 2rem; border-bottom: 1px solid var(--border-color);">
+                <h3 style="margin-bottom: 1rem;">
+                    {% if lang == 'en' %}
+                        {{ item['question']['question_en'] }}
+                    {% else %}
+                        {{ item['question']['question_ar'] }}
+                    {% endif %}
+                </h3>
+                
+                <div style="display: flex; flex-direction: column; gap: 0.75rem;">
+                    {% for option in item['options'] %}
+                    <label style="display: flex; align-items: center; gap: 0.5rem; cursor: pointer;">
+                        <input type="radio" name="question_{{ item['question']['id'] }}" value="{{ loop.index0 }}" required>
+                        {% if lang == 'en' %}
+                            {{ option['option_en'] }}
+                        {% else %}
+                            {{ option['option_ar'] }}
+                        {% endif %}
+                    </label>
+                    {% endfor %}
+                </div>
+            </div>
+            {% endfor %}
+            
+            <button type="submit" class="btn btn-primary" style="width: 100%;">{% if lang == 'en' %}Submit Quiz{% else %}إرسال الاختبار{% endif %}</button>
+        </form>
+    </div>
+</section>
+{% endblock %}

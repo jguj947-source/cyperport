@@ -1,0 +1,44 @@
+{% extends "base.html" %}
+
+{% block title %}{% if item %}{% if lang == 'en' %}Edit Tip/Alert{% else %}تعديل نصيحة/تنبيه{% endif %}{% else %}{% if lang == 'en' %}New Tip/Alert{% else %}نصيحة/تنبيه جديد{% endif %}{% endif %} - {% if lang == 'en' %}Cybersecurity Portal{% else %}بوابة الأمن السيبراني{% endif %}{% endblock %}
+
+{% block content %}
+<section class="section container">
+    <div style="max-width: 600px; margin: 0 auto;">
+        <h2 style="margin-bottom: 2rem;">{% if item %}{% if lang == 'en' %}Edit Tip/Alert{% else %}تعديل نصيحة/تنبيه{% endif %}{% else %}{% if lang == 'en' %}New Tip/Alert{% else %}نصيحة/تنبيه جديد{% endif %}{% endif %}</h2>
+        
+        <form method="POST" style="background-color: white; padding: 2rem; border-radius: 0.5rem;">
+            {{ form.hidden_tag() }}
+            
+            <div class="form-group">
+                <label for="{{ form.type.id }}">{% if lang == 'en' %}Type{% else %}النوع{% endif %}</label>
+                {{ form.type(class="form-control") }}
+                {% for error in form.type.errors %}
+                    <span class="error-message">{{ error }}</span>
+                {% endfor %}
+            </div>
+            
+            <div class="form-group">
+                <label for="{{ form.content_ar.id }}">{% if lang == 'en' %}Content (Arabic){% else %}المحتوى (العربية){% endif %}</label>
+                {{ form.content_ar(class="form-control") }}
+                {% for error in form.content_ar.errors %}
+                    <span class="error-message">{{ error }}</span>
+                {% endfor %}
+            </div>
+            
+            <div class="form-group">
+                <label for="{{ form.content_en.id }}">{% if lang == 'en' %}Content (English){% else %}المحتوى (الإنجليزية){% endif %}</label>
+                {{ form.content_en(class="form-control") }}
+                {% for error in form.content_en.errors %}
+                    <span class="error-message">{{ error }}</span>
+                {% endfor %}
+            </div>
+            
+            <div style="display: flex; gap: 1rem;">
+                <button type="submit" class="btn btn-primary">{% if lang == 'en' %}Save{% else %}حفظ{% endif %}</button>
+                <a href="{{ url_for('admin_tips_alerts') }}" class="btn btn-secondary">{% if lang == 'en' %}Cancel{% else %}إلغاء{% endif %}</a>
+            </div>
+        </form>
+    </div>
+</section>
+{% endblock %}

@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+
+{% block title %}{{ article['title_ar'] if lang == 'ar' else article['title_en'] }} - بوابة الأمن السيبراني{% endblock %}
+
+{% block content %}
+<section class="section container">
+    <div style="max-width: 800px; margin: 0 auto;">
+        <a href="{{ url_for('articles') }}" style="color: var(--primary-color); text-decoration: none;">← العودة للمقالات</a>
+        
+        <h1 style="margin-top: 1.5rem; margin-bottom: 1rem;">
+            {% if lang == 'en' %}
+                {{ article['title_en'] }}
+            {% else %}
+                {{ article['title_ar'] }}
+            {% endif %}
+        </h1>
+        
+        <div style="color: var(--text-light); font-size: 0.9rem; margin-bottom: 2rem;">
+            {{ article['views'] }} مشاهدة
+        </div>
+        
+        <div style="background-color: white; padding: 2rem; border-radius: 0.5rem; line-height: 1.8;">
+            {% if lang == 'en' %}
+                {{ article['content_en'] }}
+            {% else %}
+                {{ article['content_ar'] }}
+            {% endif %}
+        </div>
+    </div>
+</section>
+{% endblock %}
